@@ -1,0 +1,16 @@
+services:
+  backend:
+    build: ./backend
+    environment:
+      DATA_SOURCE: demo
+      DATABASE_PATH: /data/fleet_insights.db
+    ports: ["8000:8000"]
+    volumes: ["fleet_data:/data"]
+    restart: unless-stopped
+  frontend:
+    build: ./frontend
+    depends_on: [backend]
+    ports: ["5173:80"]
+    restart: unless-stopped
+volumes:
+  fleet_data:
